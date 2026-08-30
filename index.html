@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Magic-8</title>
-  <link rel="icon" type="image/png" href="8__Black_Mirror_Ball_Ornament-removebg-preview.png">
-  <!-- Dot Matrix Pixel Font -->
+  <script>
+    if (location.protocol === 'file:') {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#000"/><circle cx="50" cy="50" r="40" fill="#1a1a1a"/><text x="50" y="60" font-size="50" fill="#fff" text-anchor="middle" font-weight="bold">8</text></svg>`;
+      const blob = new Blob([svg], {type: 'image/svg+xml'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'icon';
+      link.href = url;
+      document.head.appendChild(link);
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
@@ -31,8 +41,10 @@
       width: 380px;
       height: 720px;
       border-radius: 24px;
-      /* Background Image from folder */
-      background-image: url('leop.jpg');
+      /* Fallback background color if image relative path fails */
+      background-color: #c68a4c;
+      /* Relative path with ./ ensures root-relative folder targeting */
+      background-image: url('./leop.jpg');
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -46,7 +58,6 @@
       overflow: hidden;
     }
 
-    /* Logo Link */
     .logo-link {
       text-decoration: none;
       color: inherit;
@@ -58,7 +69,6 @@
       transition: opacity 0.2s ease;
     }
 
-    /* Header Title Badge */
     .title-badge {
       background-color: #161724;
       color: #ffffff;
@@ -71,7 +81,6 @@
       cursor: pointer;
     }
 
-    /* Ball Container holding image and screen */
     .ball-container {
       position: relative;
       width: 250px;
@@ -81,7 +90,6 @@
       align-items: center;
     }
 
-    /* Image of the 8-Ball from folder */
     .ball-image {
       width: 100%;
       height: 100%;
@@ -92,7 +100,6 @@
       z-index: 1;
     }
 
-    /* Screen Overlay Inside the Ball */
     .ball-screen {
       position: relative;
       z-index: 2;
@@ -111,7 +118,6 @@
       box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
     }
 
-    /* Input & Button Section */
     .controls {
       width: 100%;
       display: flex;
@@ -121,7 +127,6 @@
       z-index: 2;
     }
 
-    /* Custom Input Box */
     .question-input {
       width: 85%;
       height: 60px;
@@ -141,7 +146,6 @@
       color: #555555;
     }
 
-    /* Custom Button */
     .submit-btn {
       background-color: #dcdcdc;
       border: 3px solid #b0b0b0;
@@ -169,7 +173,13 @@
     </a>
 
     <div class="ball-container">
-      <img src="8__Black_Mirror_Ball_Ornament-removebg-preview.png" alt="Magic 8 Ball" class="ball-image" />
+      <!-- Added onerror handler and explicit ./ relative path -->
+      <img 
+        src="./8__Black_Mirror_Ball_Ornament-removebg-preview.png" 
+        alt="Magic 8 Ball" 
+        class="ball-image" 
+        onerror="console.error('Failed to load ball image. Verify file location and name.');"
+      />
       <div class="ball-screen" id="displayScreen"></div>
     </div>
 
