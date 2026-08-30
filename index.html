@@ -41,7 +41,9 @@
       width: 380px;
       height: 720px;
       border-radius: 24px;
-      background-color: #8B6F47;
+      /* Fallback background color if image relative path fails */
+      /* Relative path with ./ ensures root-relative folder targeting */
+      background-image: url('./leop.jpg');
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -227,17 +229,6 @@
 
       displayScreen.textContent = getWeightedAnswer();
     });
-
-    // Load background image
-    const appCard = document.querySelector('.app-card');
-    const img = new Image();
-    img.onload = () => {
-      appCard.style.backgroundImage = `url('${img.src}')`;
-    };
-    img.onerror = () => {
-      console.log('Could not load leop.jpg, using fallback color');
-    };
-    img.src = 'leop.jpg';
   </script>
 
 </body>
