@@ -227,6 +227,17 @@
 
       displayScreen.textContent = getWeightedAnswer();
     });
+
+    // Load background image
+    const appCard = document.querySelector('.app-card');
+    const img = new Image();
+    img.onload = () => {
+      appCard.style.backgroundImage = `url('${img.src}')`;
+    };
+    img.onerror = () => {
+      console.log('Could not load leop.jpg, using fallback color');
+    };
+    img.src = 'leop.jpg';
   </script>
 
 </body>
