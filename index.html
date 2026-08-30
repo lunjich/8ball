@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magic-8</title>
+  <!-- Dot Matrix Pixel Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #121212;
+      font-family: 'Silkscreen', monospace;
+    }
+
+    /* Mobile Frame Container */
+    .app-card {
+      width: 380px;
+      height: 720px;
+      border-radius: 24px;
+      /* Background Image from folder */
+      background-image: url('leop.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Header Title Badge */
+    .title-badge {
+      background-color: #161724;
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    /* Ball Container holding image and screen */
+    .ball-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Image of the 8-Ball from folder */
+    .ball-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Screen Overlay Inside the Ball */
+    .ball-screen {
+      position: relative;
+      z-index: 2;
+      width: 130px;
+      height: 85px;
+      background-color: #161724;
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Input & Button Section */
+    .controls {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    /* Custom Input Box */
+    .question-input {
+      width: 85%;
+      height: 60px;
+      background-color: #dcdcdc;
+      border: 3px solid #b0b0b0;
+      border-radius: 12px;
+      padding: 0 15px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.85rem;
+      color: #333333;
+      text-align: center;
+      outline: none;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-input::placeholder {
+      color: #555555;
+    }
+
+    /* Custom Button */
+    .submit-btn {
+      background-color: #dcdcdc;
+      border: 3px solid #b0b0b0;
+      border-radius: 12px;
+      padding: 10px 24px;
+      font-family: 'Silkscreen', monospace;
+      font-size: 1rem;
+      color: #000000;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.1s ease, background-color 0.2s ease;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.96);
+      background-color: #c5c5c5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+    <div class="title-badge">Magic-8</div>
+
+    <div class="ball-container">
+      <img src="8__Black_Mirror_Ball_Ornament-removebg-preview.png" alt="Magic 8 Ball" class="ball-image" />
+      <div class="ball-screen" id="displayScreen"></div>
+    </div>
+
+    <div class="controls">
+      <input 
+        type="text" 
+        id="userInput" 
+        class="question-input" 
+        placeholder="input your problem here"
+        autocomplete="off"
+      />
+      <button class="submit-btn" id="askBtn">Help Me!</button>
+    </div>
+  </div>
+
+  <script>
+    const responsePool = [
+      { text: "Definitely yes!", weight: 40 },
+      { text: "Ask again later.", weight: 20 },
+      { text: "Outlook not so good.", weight: 20 },
+      { text: "Absolutely not!", weight: 10 },
+      { text: "Signs point to yes!", weight: 10 }
+    ];
+
+    function getWeightedAnswer() {
+      const totalWeight = responsePool.reduce((acc, item) => acc + item.weight, 0);
+      let randomNum = Math.random() * totalWeight;
+
+      for (const option of responsePool) {
+        if (randomNum < option.weight) {
+          return option.text;
+        }
+        randomNum -= option.weight;
+      }
+    }
+
+    const askBtn = document.getElementById('askBtn');
+    const userInput = document.getElementById('userInput');
+    const displayScreen = document.getElementById('displayScreen');
+
+    askBtn.addEventListener('click', () => {
+      const question = userInput.value.trim();
+      
+      if (question === "") {
+        displayScreen.textContent = "Ask something first!";
+        return;
+      }
+
+      displayScreen.textContent = getWeightedAnswer();
+    });
+  </script>
+
+</body>
+</html>
