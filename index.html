@@ -45,6 +45,18 @@
       overflow: hidden;
     }
 
+    /* Logo Link */
+    .logo-link {
+      text-decoration: none;
+      color: inherit;
+      z-index: 2;
+    }
+
+    .logo-link:hover {
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
     /* Header Title Badge */
     .title-badge {
       background-color: #161724;
@@ -55,6 +67,7 @@
       letter-spacing: 2px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       z-index: 2;
+      cursor: pointer;
     }
 
     /* Ball Container holding image and screen */
@@ -150,7 +163,9 @@
 <body>
 
   <div class="app-card">
-    <div class="title-badge">Magic-8</div>
+    <a href="#" class="logo-link">
+      <div class="title-badge">Magic-8</div>
+    </a>
 
     <div class="ball-container">
       <img src="8__Black_Mirror_Ball_Ornament-removebg-preview.png" alt="Magic 8 Ball" class="ball-image" />
